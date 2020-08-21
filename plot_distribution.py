@@ -4,8 +4,8 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 sns.set(style='whitegrid', font='Ubuntu')
-df = pd.read_csv('csv_files/rmsd.csv')
+df = pd.read_csv('data/rmsd.csv')
 sns.distplot(df['rmsd'], color='#348595')
-plt.xlabel('RMSD')
+plt.xlabel(r'RMSD ($\mathrm{\AA}$)')
 plt.ylabel('Occurrence')
 plt.savefig('plots/rmsd_distribution.png', dpi=300)

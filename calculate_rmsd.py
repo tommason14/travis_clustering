@@ -1433,7 +1433,7 @@ See https://github.com/charnley/rmsd for citation information
     #         args.format = filename_suffix
     
     lst = glob('clusters/*xyz')
-    with open('csv_files/rmsd.csv', 'w') as f:
+    with open('data/rmsd.csv', 'w') as f:
         f.write('cluster1,cluster2,rmsd\n')
         for i, j in itertools.product(lst, repeat = 2):
             if i != j: # not including RMSDs of clusters with themselves

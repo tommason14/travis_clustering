@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-import os
 import pandas as pd
 from sklearn.cluster import KMeans
+from joblib import dump
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 from matplotlib import cm
@@ -41,6 +41,7 @@ def plot_heatmap(df, output = 'plots/heatmap.png'):
     plt.yticks(rotation=0)
     plt.xlabel('Cluster 1')
     plt.ylabel('Cluster 2')
+    plt.title('KMeans clusters based on pairwise RMSD')
     plt.savefig(output, dpi=300)
     plt.clf()
 
@@ -53,12 +54,12 @@ def plot_centroids(km, output = 'plots/centroids.png'):
     for n, yval in enumerate(centroids):
         plt.plot(1, yval, color = colours(n), marker='x', markersize=10)
     plt.xticks([])
-    plt.title('Centroids')
-    plt.ylabel('RMSD')
+    plt.title('Centroids of KMeans clustering')
+    plt.ylabel(r'RMSD ($\mathrm{\AA}$)')
     plt.savefig(output, dpi=300)
     plt.clf()
 
-def find_most_prominent_cluster(df, output='csv_files/kmeans_assignments.csv'):
+def find_most_prominent_cluster(df, output='data/kmeans_assignments.csv'):
     """
     For each xyz in cluster1, sum up the number of times that each xyz file in cluster2
     is assigned to each cluster ID. Each xyz then has a cluster ID assigned to it, which is
@@ -73,9 +74,10 @@ def find_most_prominent_cluster(df, output='csv_files/kmeans_assignments.csv'):
 
 def main():
     sns.set(style='whitegrid', font='Ubuntu') # also controls matplotlib style
-    df = pd.read_csv('csv_files/rmsd.csv')
+    df = pd.read_csv('data/rmsd.csv')
     clustered, kmeans = fit_clusters(df)
-    clustered.to_csv('csv_files/clustering_results.csv', index=False)
+    clustered.to_csv('data/clustering_results.csv', index=False)
+    dump(kmeans, 'data/kmeans_obj.joblib')
     find_most_prominent_cluster(clustered)
     plot_centroids(kmeans)
     plot_heatmap(clustered)
