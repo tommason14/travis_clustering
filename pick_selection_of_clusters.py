@@ -2,7 +2,7 @@
 
 """
 Random select n clusters with the sample evenly distributed between the
-groups assigned by the KMeans algorithm, taking 20% of each KMeans cluster
+groups assigned by the KMeans algorithm, taking x% of each KMeans cluster
 """
 import pandas as pd
 import ete3
@@ -10,10 +10,11 @@ import ete3
 df = pd.read_csv('data/kmeans_assignments.csv')
 selection = (
     df.groupby('kmeans_cluster')
-    .apply(lambda group: group.sample(frac=0.2))
+    .apply(lambda group: group.sample(frac=0.1))
     .reset_index(drop=True)
 )
 
+selection.to_csv('data/chosen_structures.csv', index=False)
 ########################################
 #  print tree showing KMeans clusters  #
 ########################################

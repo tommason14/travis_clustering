@@ -4,4 +4,5 @@ mkdir -p data plots
 ./calculate_rmsd.py &&
 ./plot_distribution.py &&
 ./kmeans_cluster_analysis.py &&
-./pick_selection_of_clusters.py 
+./pick_selection_of_clusters.py &&
+./select_clusters.sh
