@@ -23,6 +23,8 @@ with open(sys.argv[1]) as f:
             clusters.append(tmp)
             tmp = []
         tmp.append(line)
+    # last step
+    clusters.append(tmp)
 
 if not os.path.isdir("clusters"):
     os.mkdir("clusters")
